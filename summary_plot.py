@@ -1,19 +1,14 @@
 # pylint: disable=C0114
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import plotly.express as px
 from pathlib import Path
-
 
 # === 基本設定 ===
 excel_path = Path(r"D:\LongTermCare\ProgressReport\0423\group1.xlsx")
-output_path = Path(r"D:\LongTermCare\ProgressReport\0430\group1.png")
+output_path = Path(r"D:\LongTermCare\ProgressReport\0430\group1_plotly.html")
 
 # 讀取整本 Excel
 xls = pd.ExcelFile(excel_path)
-
-# Seaborn 美化樣式
-sns.set_theme(style='whitegrid', palette='muted', font_scale=1.1)
 
 # 建立一個空的 DataFrame 收集所有人的資料
 all_data = pd.DataFrame()
@@ -26,54 +21,48 @@ for sheet_name in xls.sheet_names:
     df['Date'] = pd.to_datetime(df['Date'])
     df = df.sort_values('Date')
 
-        # 加一欄 user 名稱
+    # 加一欄 user 名稱
     df['User'] = sheet_name
 
     # 合併到 all_data
     all_data = pd.concat([all_data, df], ignore_index=True)
 
-# 建立圖表
-fig, ax = plt.subplots(figsize=(15, 8))
-
-# 繪製柱狀圖，根據 User 分顏色
-sns.barplot(
-    data=all_data,
+# 使用 plotly express 畫動態柱狀圖
+fig = px.bar(
+    all_data,
     x='Date',
     y='Completion rate > 50(%)',
-    hue='User',        # 這行讓不同使用者分開
-    dodge=True,        # 讓同一天的 bar 並排，不要疊在一起
-    ax=ax
+    color='User',  # 分色
+    barmode='group',  # 同一天多個 user 的柱子並排
+    title='Daily Completion Rate (>50%) per User',
+    labels={
+        'Date': 'Date',
+        'Completion rate > 50(%)': 'Completion Rate (%)'
+    },
+    hover_data=['User', 'Completion rate > 50(%)']
 )
 
-# 設定 Y軸刻度(0-100)
-ax.set_ylim(0, 100)
-
-# 添加警戒線（紅色虛線 50%）與圖例
-ax.axhline(
-    50, color='red',
-    linestyle='--',
-    linewidth=1.5,
-    label='50% threshold'
+# 加上 50% 警戒線
+fig.add_shape(
+    type='line',
+    x0=all_data['Date'].min(), x1=all_data['Date'].max(),
+    y0=50, y1=50,
+    line=dict(color='red', dash='dash', width=2),
 )
 
-# 圖表外觀設定
-ax.set_title(
-    'Daily Completion Rate (>50%) per User',
-    fontsize=16,
-    fontweight='bold'
+# 更新 layout
+fig.update_layout(
+    yaxis=dict(range=[0, 100]),
+    xaxis_title='Date',
+    yaxis_title='Completion Rate (%)',
+    legend_title_text='Users',
+    bargap=0.2,
 )
-ax.set_xlabel('Date')
-ax.set_ylabel('Completion Rate (%)')
-ax.tick_params(axis='x', rotation=45)
-ax.legend(title="Users")
-ax.grid(True)
 
-# 儲存圖形
-output_path.parent.mkdir(parents=True, exist_ok=True)  # 確保資料夾存在
-plt.tight_layout()
-plt.savefig(output_path, dpi=300)
-print(f"圖形已儲存至：{output_path}")
+# 儲存成 HTML（可以雙擊打開看，或上傳網頁）
+output_path.parent.mkdir(parents=True, exist_ok=True)
+fig.write_html(str(output_path))
+print(f"互動式圖表已儲存至：{output_path}")
 
-# 顯示並關閉圖表
-plt.show()
-plt.close()
+# 顯示圖表
+fig.show()
