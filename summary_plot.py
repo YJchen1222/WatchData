@@ -15,8 +15,8 @@ xls = pd.ExcelFile(excel_path)
 # Seaborn 美化樣式
 sns.set_theme(style='whitegrid', palette='muted', font_scale=1.1)
 
-# 建立圖表
-fig, ax = plt.subplots(figsize=(15, 8))
+# 建立一個空的 DataFrame 收集所有人的資料
+all_data = pd.DataFrame()
 
 # 遍歷每個 sheet，視為一位 user
 for sheet_name in xls.sheet_names:
@@ -26,14 +26,24 @@ for sheet_name in xls.sheet_names:
     df['Date'] = pd.to_datetime(df['Date'])
     df = df.sort_values('Date')
 
-    # 繪製該使用者的折線圖
-    sns.lineplot(
-        data=df,
-        x='Date',
-        y='Completion rate > 50(%)',
-        marker='o',
-        label=f'{sheet_name}'
-    )
+        # 加一欄 user 名稱
+    df['User'] = sheet_name
+
+    # 合併到 all_data
+    all_data = pd.concat([all_data, df], ignore_index=True)
+
+# 建立圖表
+fig, ax = plt.subplots(figsize=(15, 8))
+
+# 繪製柱狀圖，根據 User 分顏色
+sns.barplot(
+    data=all_data,
+    x='Date',
+    y='Completion rate > 50(%)',
+    hue='User',        # 這行讓不同使用者分開
+    dodge=True,        # 讓同一天的 bar 並排，不要疊在一起
+    ax=ax
+)
 
 # 設定 Y軸刻度(0-100)
 ax.set_ylim(0, 100)
