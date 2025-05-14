@@ -2,4 +2,5 @@
 
 user = "08020029"
 target_mouth = "04"
-target_date = "2025-04-24"
+target_date = "2025-05-08"
+location = "puli"  #nangang
