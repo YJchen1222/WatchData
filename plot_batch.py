@@ -1,5 +1,5 @@
 # pylint: disable=C0114
-from config import user, target_mouth
+from config import user, target_mouth, location
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import pandas as pd
@@ -10,7 +10,7 @@ import seaborn as sns
 #user = '08020020'
 #target_mouth = "04"
 sheet_name = "Summary"
-file_path = rf"D:\LongTermCare\WatchData\{user}\{user}_{target_mouth}month.xlsx"  
+file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\{user}_{target_mouth}month.xlsx"  
 print(f"檔案路徑：{file_path}")
 
 # === 讀取資料 ===
@@ -63,7 +63,7 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 
 # 儲存圖形
-save_path = rf"D:\LongTermCare\WatchData\{user}\{user}_{target_mouth}month_Summary_v1.png"
+save_path = rf"D:\LongTermCare\WatchData\{location}\{user}\{user}_{target_mouth}month_Summary_v2.png"
 fig.savefig(save_path, dpi=300)
 print(f"圖形已儲存至：{save_path}")
 

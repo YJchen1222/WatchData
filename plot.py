@@ -1,5 +1,5 @@
 # pylint: disable=C0114
-from config import user, target_date
+from config import user, target_date, location
 from date_utils import update_target_date_in_config
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -10,7 +10,7 @@ import seaborn as sns
 #user = "08020020"
 #target_date = "2025-04-07"
 sheet_name = "Results"
-file_path = rf"D:\LongTermCare\WatchData\{user}\file\{target_date}_30mins.xlsx"
+file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\file\{target_date}_30mins.xlsx"
 
 print(f"檔案路徑：{file_path}")
 
@@ -63,7 +63,7 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 
 # 儲存圖形
-save_path = rf"D:\LongTermCare\WatchData\{user}\fig\{user}_{target_date}_Completion rate(%).png"
+save_path = rf"D:\LongTermCare\WatchData\{location}\{user}\fig\{user}_{target_date}_Completion rate(%).png"
 fig.savefig(save_path, dpi=300)
 print(f"圖形已儲存至：{save_path}")
 

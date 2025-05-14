@@ -1,12 +1,11 @@
 # pylint: disable=C0114
-from config import user, target_date
+from config import user, target_date, location
 import pandas as pd
-
 # === 基本設定 ===
 # user = '08020020'
 # target_date = "2025-04-12"
 sheet_name = "心率.脈搏"
-file_path = rf"D:\LongTermCare\WatchData\{user}\20250425160746r.xlsx"
+file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\20250513162411r.xlsx"
 
 
 print(f"檔案路徑：{file_path}")
@@ -98,7 +97,7 @@ interval_counts[interval_label] = pd.to_datetime(interval_counts[interval_label]
 missing_df['Loss_intervals'] = missing_df['Loss_intervals'].dt.strftime('%Y-%m-%d %H:%M:%S')
 
 # current_time = datetime.now().strftime('%Y%m%d%H%M%S')
-output_path = rf"D:\LongTermCare\WatchData\{user}\file\{target_date}_30mins.xlsx"
+output_path = rf"D:\LongTermCare\WatchData\{location}\{user}\file\{target_date}_30mins.xlsx"
 with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
     interval_counts.to_excel(writer, sheet_name='Results', index=False)
     missing_df.to_excel(writer, sheet_name='Loss_intervals', index=False)

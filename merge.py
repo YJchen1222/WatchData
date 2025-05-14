@@ -1,13 +1,13 @@
 # pylint: disable=C0114
 import os
 import pandas as pd
-from config import user, target_mouth
+from config import user, target_mouth, location
 
 # 設定你的資料夾路徑
 # user = "08020020"
 # target_mouth = "04"
-folder_path = rf"D:\LongTermCare\WatchData\{user}\file"
-output_path = rf"D:\LongTermCare\WatchData\{user}\{user}_{target_mouth}month.xlsx"
+folder_path = rf"D:\LongTermCare\WatchData\{location}\{user}\file"
+output_path = rf"D:\LongTermCare\WatchData\{location}\{user}\{user}_{target_mouth}month.xlsx"
 
 # 建立 ExcelWriter 來寫入新的合併檔案
 with pd.ExcelWriter(output_path, engine='openpyxl') as writer:

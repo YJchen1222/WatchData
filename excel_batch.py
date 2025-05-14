@@ -1,12 +1,12 @@
 # pylint: disable=C0114
 from openpyxl import load_workbook
-from config import user, target_mouth
+from config import user, target_mouth, location
 import pandas as pd
 
 # 讀取 Excel 文件
 #user = "08020020"
 #target_mouth = "04"
-file_path = rf"D:\LongTermCare\WatchData\{user}\{user}_{target_mouth}month.xlsx" 
+file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\{user}_{target_mouth}month.xlsx" 
 excel_data = pd.ExcelFile(file_path)
 
 # 初始化一個字典來儲存結果

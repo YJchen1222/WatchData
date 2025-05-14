@@ -1,7 +1,7 @@
 # pylint: disable=C0114
+from pathlib import Path
 import pandas as pd
 import plotly.express as px
-from pathlib import Path
 
 # === 基本設定 ===
 excel_path = Path(r"D:\LongTermCare\ProgressReport\0423\group1.xlsx")
@@ -52,6 +52,9 @@ fig.add_shape(
 
 # 更新 layout
 fig.update_layout(
+    xaxis=dict(
+        tickmode='linear'  # 這樣就是每天都一格
+    ),
     yaxis=dict(range=[0, 100]),
     xaxis_title='Date',
     yaxis_title='Completion Rate (%)',
