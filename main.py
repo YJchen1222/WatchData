@@ -2,10 +2,9 @@
 from config import user, target_date, location
 import pandas as pd
 # === 基本設定 ===
-# user = '08020020'
-# target_date = "2025-04-12"
+
 sheet_name = "心率.脈搏"
-file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\20250513162411r.xlsx"
+file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\20250602140738r.xlsx"
 
 
 print(f"檔案路徑：{file_path}")
@@ -102,4 +101,14 @@ with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
     interval_counts.to_excel(writer, sheet_name='Results', index=False)
     missing_df.to_excel(writer, sheet_name='Loss_intervals', index=False)
 
+# total_cocunt excle for low HR data
+output2_path = rf"D:\LongTermCare\WatchData\{location}\{user}\file\total_count\{target_date}_total_count.xlsx"
+record_df = pd.DataFrame({
+    '日期': [target_date],
+    '資料筆數': [record_count]
+})
+record_df.to_excel(output2_path, index=False)
+
+
 print(f"\n✅ 結果已匯出至：{output_path}")
+print(f"\n✅ 總筆數已匯出至：{output2_path}")
