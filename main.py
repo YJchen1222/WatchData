@@ -4,7 +4,7 @@ import pandas as pd
 # === 基本設定 ===
 
 sheet_name = "心率.脈搏"
-file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\20250602140738r.xlsx"
+file_path = rf"D:\LongTermCare\WatchData\{location}\{user}\20250602140738r.xlsx" # fix file name
 
 
 print(f"檔案路徑：{file_path}")
@@ -25,7 +25,6 @@ df['時間'] = pd.to_datetime(df['時間'], errors='coerce')
 df.dropna(subset=['時間'], inplace=True)  # 刪除無效時間
 
 # 篩選整天的資料
-# 使用 .copy() 避免警告
 date_obj = pd.to_datetime(target_date).date()
 day_df = df[df['時間'].dt.date == date_obj].copy()
 
