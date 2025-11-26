@@ -24,5 +24,5 @@
 
 **推測使用的函式庫:**
 * **數據處理:** `[Pandas]`
-* **數據視覺化:** `[Matplotlib]` 或 `[Seaborn]`
-* **Excel 處理:** `[openpyxl]` 或 `[xlrd]` (用於讀寫 Excel 文件)
+* **數據視覺化:** `[Matplotlib]` 及 `[Seaborn]`
+* **Excel 處理:** `[openpyxl]` 及 `[xlrd]` 
